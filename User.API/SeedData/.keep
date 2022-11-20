@@ -1,0 +1,3 @@
+To seed the data use the following commands
+1. dotnet ef migrations add initial --context ApplicationDataContext
+2. Update the command dotnet ef database update --context ApplicationDataContext

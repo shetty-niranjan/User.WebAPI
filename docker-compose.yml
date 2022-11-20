@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-CU5-ubuntu-18.04
+    ports:
+      - 1433:1433
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: YourStrong@Passw0rd
+      MSSQL_PID: Express
+
+  user.api:
+    image: ${DOCKER_REGISTRY-}userapi
+    build:
+      context: .
+      dockerfile: User.API/Dockerfile

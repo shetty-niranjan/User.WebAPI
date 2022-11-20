@@ -1,0 +1,17 @@
+1. Package Console
+2. dotnet tool install --global dotnet-ef --version 6.*
+3. You can invoke the tool using the following command: dotnet-ef
+
+4. check if the command is working
+   dotnet ef
+
+5. Change to current directory use the command
+   cd C:\Users\shett\OneDrive\Desktop\Altimetrik\Zip Candidate User API Challenge C#
+
+6. Specify the context against which we want to run
+   
+
+7. Manually check the specified database connection in appSetting.json, if it's working
+8. update the script to database 
+   dotnet ef database update --context ApplicationDataContext
+   Check if build succeeded
