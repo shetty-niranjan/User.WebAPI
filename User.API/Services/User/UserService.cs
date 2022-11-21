@@ -25,13 +25,13 @@ namespace User.API.Services.User
             return _mapper.Map<Users,UsersResponseDto>(await _repository.CreateUser(user));
         }
 
-        public async Task<IEnumerable<UsersResponseDto>> Users()
+        public async Task<IEnumerable<UsersResponseDto>> GetUsers()
         {
             var users = await _repository.Users();
             return _mapper.Map<IEnumerable<Users>, IEnumerable<UsersResponseDto>>(users);
         }
 
-        public async Task<UsersResponseDto> UserById(Guid id)
+        public async Task<UsersResponseDto> GetUserById(Guid id)
         {
             var userById = await _repository.UserById(id);
             if (userById == null) return null;

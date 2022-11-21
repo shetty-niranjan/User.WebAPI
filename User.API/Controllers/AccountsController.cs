@@ -43,7 +43,7 @@ namespace User.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AccountsResponseDto>>> Accounts()
         {
-            var accounts = await _accountService.AccountsList();
+            var accounts = await _accountService.GetAccounts();
             return Ok(accounts);
         }
 

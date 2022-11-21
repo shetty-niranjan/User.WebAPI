@@ -45,14 +45,14 @@ namespace TestProject.WebAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UsersResponseDto>>> Users()
         {
-            var users = await _userService.Users();           
+            var users = await _userService.GetUsers();           
             return Ok(users);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Users(Guid id)
         {
-            var user = await _userService.UserById(id);
+            var user = await _userService.GetUserById(id);
             if (user == null) NotFound("User not found");
             return Ok(user);
         }

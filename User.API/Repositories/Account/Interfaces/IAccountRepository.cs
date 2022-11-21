@@ -7,6 +7,6 @@ namespace User.API.Repositories.Users.Interfaces
     public interface IAccountRepository
     {
         Task<Accounts> CreateAccount(Accounts account);
-        Task<IEnumerable<Accounts>> Accounts();
+        Task<IEnumerable<Accounts>> GetAccounts();
     }
 }

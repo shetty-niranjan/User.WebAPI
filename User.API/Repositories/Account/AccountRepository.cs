@@ -22,15 +22,15 @@ namespace User.API.Repositories.Users
         {
             await _context.Accounts.AddAsync(account);
             _context.SaveChanges();
-            return await AccountById(account.AccountId);
+            return await GetAccountById(account.AccountId);
         }
 
-        private async Task<Accounts> AccountById(Guid accountId)
+        private async Task<Accounts> GetAccountById(Guid accountId)
         {
             return await _context.Accounts.Include("Users").SingleOrDefaultAsync(a => a.AccountId == accountId);
         }
 
-        public async Task<IEnumerable<Accounts>> Accounts()
+        public async Task<IEnumerable<Accounts>> GetAccounts()
         {
            return await _context.Accounts.ToListAsync();
         }

@@ -28,9 +28,9 @@ namespace User.API.Services.Account
             return _mapper.Map<Accounts, AccountsResponseDto>(account);
         }
 
-        public async Task<IEnumerable<AccountsResponseDto>> AccountsList()
+        public async Task<IEnumerable<AccountsResponseDto>> GetAccounts()
         {
-             var accounts = await _accountRepository.Accounts();
+             var accounts = await _accountRepository.GetAccounts();
             return _mapper.Map<IEnumerable<Accounts>,IEnumerable<AccountsResponseDto>>(accounts);
         }
     }

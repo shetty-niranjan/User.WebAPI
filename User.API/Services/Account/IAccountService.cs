@@ -9,6 +9,6 @@ namespace User.API.Services.Account
     {
         Task<AccountsResponseDto> CreateAccount(UsersResponseDto model);
 
-        Task<IEnumerable<AccountsResponseDto>> AccountsList();
+        Task<IEnumerable<AccountsResponseDto>> GetAccounts();
     }
 }

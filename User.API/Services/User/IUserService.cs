@@ -7,8 +7,8 @@ namespace User.API.Services.User
 {
     public interface IUsersService
     {
-        Task<IEnumerable<UsersResponseDto>> Users();
-        Task<UsersResponseDto> UserById(Guid id);
+        Task<IEnumerable<UsersResponseDto>> GetUsers();
+        Task<UsersResponseDto> GetUserById(Guid id);
 
         Task<UsersResponseDto> GetByEmailAddress(string email);
 

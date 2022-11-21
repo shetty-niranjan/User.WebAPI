@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace User.API.Entities
 
@@ -18,7 +17,10 @@ namespace User.API.Entities
         [MaxLength(100)]
         [Required]
         public string EmailAddress { get; set; }
+        [Range(1, int.MaxValue)]
+
         public int MonthlySalary { get; set; }
+        [Range(1, int.MaxValue)]
         public int? MonthlyExpenses { get; set; }
     }
 }

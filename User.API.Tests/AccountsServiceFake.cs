@@ -63,7 +63,7 @@ namespace User.UnitTest
             });
 
         }
-        public async Task<IEnumerable<AccountsResponseDto>> AccountsList()
+        public async Task<IEnumerable<AccountsResponseDto>> GetAccounts()
         {
             return await Task.FromResult(_accountsData);
         }

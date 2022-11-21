@@ -35,12 +35,12 @@ namespace User.UnitTest
           
         }
 
-        public async Task<IEnumerable<UsersResponseDto>> Users()
+        public async Task<IEnumerable<UsersResponseDto>> GetUsers()
         {
             return await Task.FromResult(_userData);
         }
 
-        public async Task<UsersResponseDto> UserById(Guid id)
+        public async Task<UsersResponseDto> GetUserById(Guid id)
         {
             return await Task.FromResult(_userData.SingleOrDefault(a => a.UserId == id));
         }
