@@ -6,7 +6,7 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0-buster-slim AS build
 WORKDIR /src
-COPY ["User.API/Basket.API.csproj", "User.API/"]
+COPY ["User.API/User.API.csproj", "User.API/"]
 COPY ["BuildingBlocks/Common.Logging/Common.Logging.csproj", "Common.Logging/"]
 RUN dotnet restore "User.API/User.API.csproj"
 COPY . .
