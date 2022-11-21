@@ -27,7 +27,7 @@ namespace User.API.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<AccountsResponseDto>> Accounts([FromBody] string emailAddress)
+        public async Task<ActionResult> Accounts([FromBody] string emailAddress)
         {
             var userData = await _userService.GetByEmailAddress(emailAddress);
             IValidate<UsersResponseDto, string> validate = new ValidateUserExpenses();

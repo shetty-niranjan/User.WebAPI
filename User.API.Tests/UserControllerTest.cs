@@ -17,14 +17,11 @@ namespace User.UnitTest
         private readonly UsersController _controller;
         private readonly IUsersService _service;
         private readonly Mock<ILogger> _logger;
-        private readonly Mock<IMapper> _mapper;
-
         public UserControllerTest()
         {
             _service = new UserServiceFake();
             _logger = new Mock<ILogger>();
-            _mapper = new Mock<IMapper>();
-            _controller = new UsersController(_service, _mapper.Object, _logger.Object);
+            _controller = new UsersController(_service, _logger.Object);
         }
 
         [Fact]

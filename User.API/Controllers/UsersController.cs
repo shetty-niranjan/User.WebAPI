@@ -18,13 +18,11 @@ namespace TestProject.WebAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersService _userService;
-        private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public UsersController(IUsersService userService, IMapper mapper, ILogger logger)
+        public UsersController(IUsersService userService, ILogger logger)
         {
             _userService = userService;
-            _mapper = mapper;
             _logger = logger;
         }
 
