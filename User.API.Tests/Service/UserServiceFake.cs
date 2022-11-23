@@ -4,43 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using User.API.Models;
 using User.API.Services.User;
+using User.UnitTest.Common;
 
 namespace User.UnitTest.Service
 {
-    public class UserServiceFake : IUsersService
+    public class UserServiceFake : UserBase, IUsersService
     {
-        private readonly List<UsersResponseDto> _userData;
-        public UserServiceFake()
-        {
-            _userData = new List<UsersResponseDto>();
-            _userData.Add(new UsersResponseDto()
-            {
-                UserId = new Guid("ab2bd817-98cd-4cf3-a80a-53ea0cd9c200"),
-                Name = "User1",
-                EmailAddress = "User1@gmail.com",
-                MonthlySalary = 10000,
-                MonthlyExpenses = 500
-            });
-            _userData.Add(
-             new UsersResponseDto()
-             {
-                 UserId = new Guid("815accac-fd5b-478a-a9d6-f171a2f6ae7f"),
-                 Name = "User2",
-                 EmailAddress = "User2@gmail.com",
-                 MonthlySalary = 11000,
-                 MonthlyExpenses = 1500
-             });
-            _userData.Add(new UsersResponseDto()
-            {
-                UserId = new Guid("33704c4a-5b87-464c-bfb6-51971b4d18ad"),
-                Name = "User3",
-                EmailAddress = "User3@gmail.com",
-                MonthlySalary = 20000,
-                MonthlyExpenses = 2000
-            });
-
-        }
-
         public async Task<IEnumerable<UsersResponseDto>> GetUsers()
         {
             return await Task.FromResult(_userData);

@@ -1,67 +1,77 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
+﻿using Moq;
+using NUnit.Framework;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TestProject.WebAPI.Controllers;
 using User.API.Models;
 using User.API.Services.User;
 using User.UnitTest.Service;
-using Xunit;
+using User.UnitTest.Common;
+using System.Collections.Generic;
 
 namespace User.UnitTest.Controller
 {
-    public class UserControllerTest
+    public class UserControllerTest : UserBase
     {
-        private readonly UsersController _controller;
-        private readonly IUsersService _service;
-        private readonly Mock<ILogger> _logger;
-        public UserControllerTest()
+        private UsersController _controller;
+        private  IUsersService _service;
+        private  Mock<ILogger> _logger;
+
+        [SetUp]
+        public void Setup()
         {
             _service = new UserServiceFake();
-            _logger = new Mock<ILogger>();
-            _controller = new UsersController(_service, _logger.Object);
+                _logger = new Mock<ILogger>();
+                _controller = new UsersController(_service, _logger.Object);
         }
 
-        [Fact]
-        public void Get_WhenCalled_ReturnsAllItems()
+        [Test]
+        public async Task Get_All_Users()
         {
             // Act
-            var okResult = _controller.Users() as IEnumerable<UsersResponseDto>;
+            var okResult = await _controller.Users();
+            var result = okResult.GetObjectResult();
 
             // Assert
-            var items = Assert.IsType<IEnumerable<UsersResponseDto>>(okResult);
-            Assert.Equal(3, items.Count());
+            Assert.AreEqual(3, result.Count());
         }
 
-        [Fact]
-        public void GetById_ExistingGuidPassed_ReturnsOkResult()
+        [Test]
+        public void Get_User_By_Id_Ok_Result()
         {
             // Arrange
             var testGuid = new Guid("ab2bd817-98cd-4cf3-a80a-53ea0cd9c200");
+            var expectedUser = _userData.SingleOrDefault(u => u.UserId == testGuid);
 
             // Act
             var okResult = _controller.Users(testGuid);
+            var result = okResult.Result.GetObjectResult();
 
             // Assert
-            Assert.IsType<OkObjectResult>(okResult.Result as OkObjectResult);
+            Assert.Multiple(() =>
+            {
+                Assert.AreEqual(expectedUser.MonthlySalary, result.MonthlySalary);
+                Assert.AreEqual(expectedUser.Name, result.Name);
+                Assert.AreEqual(expectedUser.MonthlyExpenses, result.MonthlyExpenses);
+                Assert.AreEqual(expectedUser.UserId, result.UserId);
+            });
         }
 
 
-        [Fact]
-        public void GetById_Unknown_Guid_Passed_Returns_NotFoundResult()
+        [Test]
+        public void Get_User_By_Id_Failed_Result()
         {
             // Act
             var notFoundResult = _controller.Users(Guid.NewGuid());
 
             // Assert
-            Assert.IsType<NotFoundResult>(notFoundResult);
+            _logger.Verify(l => l.Information("User is not found in the database..."));
         }
 
 
-        [Fact]
+        [Test]
         public void Add_Valid_User_Passed_Returns_Created_Response()
         {
             // Arrange
@@ -75,28 +85,35 @@ namespace User.UnitTest.Controller
 
             // Act
             var createdResponse = _controller.Users(request);
+            var result = createdResponse.Result.GetObjectResult();
 
             // Assert
-            Assert.IsType<CreatedAtActionResult>(createdResponse);
-        }
-
-        [Fact]
-        public void Add_Invalid_User_Passed_Returns_Bad_Request()
-        {
-            // Arrange
-            UsersRequestDto request = new()
+            Assert.Multiple(() =>
             {
-                Name = "test5",
-                MonthlyExpenses = 100,
-                MonthlySalary = 1000
-            };
-            _controller.ModelState.AddModelError("Name", "Required");
-
-            // Act
-            var badResponse = _controller.Users(request);
-
-            // Assert
-            Assert.IsType<BadRequestObjectResult>(badResponse);
+                Assert.AreEqual(request.MonthlySalary, result.MonthlySalary);
+                Assert.AreEqual(request.Name, result.Name);
+                Assert.AreEqual(request.MonthlyExpenses, result.MonthlyExpenses);
+                Assert.IsNotNull(result.UserId);
+            });
         }
+
+        //[Test]
+        //public void Add_Invalid_User_Passed_Returns_Bad_Request()
+        //{
+        //    // Arrange
+        //    UsersRequestDto request = new()
+        //    {
+        //        Name = "test5",
+        //        MonthlyExpenses = 100,
+        //        MonthlySalary = 1000
+        //    };
+        //    _controller.ModelState.AddModelError("Name", "Required");
+
+        //    // Act
+        //    var badResponse = _controller.Users(request);
+
+        //    // Assert
+        //    Assert.IsType<BadRequestObjectResult>(badResponse);
+        //}
     }
 }

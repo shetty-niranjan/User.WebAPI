@@ -50,7 +50,7 @@ namespace TestProject.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Users(Guid id)
+        public async Task<ActionResult<UsersResponseDto>> Users(Guid id)
         {
             var user = await _userService.GetUserById(id);
             if (user == null)
