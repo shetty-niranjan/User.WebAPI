@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using User.API.Models;
 
-namespace User.UnitTest.Common
+namespace User.UnitTest.BaseClass
 {
     public class UserBase
     {

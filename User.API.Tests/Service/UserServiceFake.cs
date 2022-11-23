@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using User.API.Models;
 using User.API.Services.User;
-using User.UnitTest.Common;
+using User.UnitTest.BaseClass;
 
 namespace User.UnitTest.Service
 {

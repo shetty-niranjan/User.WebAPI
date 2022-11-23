@@ -1,25 +1,21 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using Moq;
 using NUnit.Framework;
 using Serilog;
-using System.Net;
-using System;
 using User.API.Controllers;
 using User.API.Helpers;
 using User.API.Services.Account;
 using User.API.Services.User;
 using User.UnitTest.Common;
 using User.UnitTest.Service;
-using System.Net.Mail;
 using User.API.Models;
-using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Linq;
+using User.UnitTest.BaseClass;
 
 namespace User.UnitTest.Controller
 {
-    internal class AccountsControllerTest
+    internal class AccountsControllerTest : AccountBase
     {
         private IAccountService _accountService;
         private IUsersService _userService;
@@ -79,7 +75,7 @@ namespace User.UnitTest.Controller
             var okResult = await _controller.Accounts();
             // Assert
             var result = okResult.GetObjectResult();
-            Assert.AreEqual(3, result.Count());
+            Assert.AreEqual(_accountsData.Count, result.Count());
         }
     }
 }

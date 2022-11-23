@@ -9,6 +9,7 @@ using User.API.Models;
 using User.API.Services.User;
 using User.UnitTest.Service;
 using User.UnitTest.Common;
+using User.UnitTest.BaseClass;
 
 namespace User.UnitTest.Controller
 {
