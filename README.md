@@ -1,9 +1,9 @@
-Update the database connection string appSettings.Json
-Update the log path in appSettings.Json
-Entity framework Migration commands to be ran using the below commands, update the db and schema
-1. Package Console
-2. dotnet tool install --global dotnet-ef --version 6.*
-3. You can invoke the tool using the following command: dotnet-ef
+
+1. Update the database connection string appSettings.Json
+2. Update the log path in appSettings.Json
+3. Entity framework Migration commands to be ran using the below commands, update the db and schema Package Console
+   dotnet tool install --global dotnet-ef --version 6.*
+   You can invoke the tool using the following command: dotnet-ef
 
 4. check if the command is working
    dotnet ef
