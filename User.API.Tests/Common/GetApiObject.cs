@@ -10,5 +10,12 @@ namespace User.UnitTest.Common
                 return (T)((ObjectResult)result.Result).Value;
             return result.Value;
         }
+
+        public static object GetActionObjectResult(this ActionResult result)
+        {
+            if (result != null)
+                return ((ObjectResult)result).Value;
+            return result;
+        }
     }
 }

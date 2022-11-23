@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Threading.Tasks;
-using AutoMapper;
 using Serilog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using User.API.Entities;
 using User.API.Models;
 using User.API.Services.User;
 using User.API.Validate;
@@ -28,13 +25,14 @@ namespace TestProject.WebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<UsersResponseDto>> Users([FromBody] UsersRequestDto model)
+        public async Task<ActionResult> Users([FromBody] UsersRequestDto model)
         {
             var emailExist = await _userService.CheckEmailAddress(model.EmailAddress);
             IValidate<bool, string> validateEmail = new ValidateUserEmailAddress();
             var error = validateEmail.Validate(emailExist);
             if (!string.IsNullOrEmpty(error))
             {
+                _logger.Error($"User cannot be created. Duplicate email address : {model.EmailAddress}");
                 return BadRequest(error);
             }
             var user = await _userService.CreateUser(model);
@@ -50,12 +48,12 @@ namespace TestProject.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<UsersResponseDto>> Users(Guid id)
+        public async Task<ActionResult> Users(Guid id)
         {
             var user = await _userService.GetUserById(id);
             if (user == null)
             {
-                _logger.Information("User is not found in the database...");
+                _logger.Error("User not found in the database");
                 NotFound("User not found");
             }
             return Ok(user);

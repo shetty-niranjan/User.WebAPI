@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using User.API.Services.User;
 using User.API.Services.Account;
-using AutoMapper;
 using System.Collections.Generic;
 using User.API.Models;
 using User.API.Validate;
+using User.API.Helpers;
+using Serilog;
 
 namespace User.API.Controllers
 {
@@ -17,12 +17,14 @@ namespace User.API.Controllers
     {
         private readonly IAccountService _accountService;
         private readonly IUsersService _userService;
+        private readonly ILogger _logger;
         public AccountsController(
          IAccountService accountService,
-         IUsersService userService)
+         IUsersService userService, ILogger logger)
         {
             _accountService = accountService;
             _userService = userService;
+            _logger = logger;
         }
 
         [AllowAnonymous]
@@ -34,9 +36,11 @@ namespace User.API.Controllers
             var error = validate.Validate(userData);
             if (!string.IsNullOrEmpty(error))
             {
-               return BadRequest(error);
+                _logger.Error($"Account cannot be created. Montly expenses should be more than {ApplicationConstants.MinExpense}");
+                return BadRequest(error);
             }
             var account = await _accountService.CreateAccount(userData);
+            _logger.Information($"Account create successfully for emailAddress : {emailAddress}");
             return Ok(account);
         }
 

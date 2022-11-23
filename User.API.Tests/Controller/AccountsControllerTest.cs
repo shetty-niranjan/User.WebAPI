@@ -1,11 +1,21 @@
 ﻿using AutoMapper;
+using Azure.Core;
 using Moq;
 using NUnit.Framework;
 using Serilog;
+using System.Net;
+using System;
 using User.API.Controllers;
+using User.API.Helpers;
 using User.API.Services.Account;
 using User.API.Services.User;
+using User.UnitTest.Common;
 using User.UnitTest.Service;
+using System.Net.Mail;
+using User.API.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace User.UnitTest.Controller
 {
@@ -24,38 +34,52 @@ namespace User.UnitTest.Controller
             _userService = new UserServiceFake();
             _logger = new Mock<ILogger>();
             _mapper = new Mock<IMapper>();
-            _controller = new AccountsController(_accountService, _userService);
+            _controller = new AccountsController(_accountService, _userService, _logger.Object);
         }
 
         [Test]
         public void Error_Message_for_user_expense_less_than_1000()
         {
             // Act
-            var user = _controller.Accounts("User1@gmail.com");
+            var accountCreateResponse = _controller.Accounts("User1@gmail.com");
+            var result = accountCreateResponse.Result.GetActionObjectResult() as AccountsResponseDto;
 
             // Assert
-            //Assert.IsType<BadRequestResult>(user);
+            _logger.Verify(l => l.Error(It.Is<string>(s =>
+                            s == $"Account cannot be created. Montly expenses should be more than {ApplicationConstants.MinExpense}")),
+                           Times.AtLeastOnce);
         }
 
-        //[Fact]
-        //public void Create_account_for_user_expense_more_than_1000()
-        //{
-        //    // Act
-        //    var user = _controller.Accounts("User2@gmail.com");
+        [Test]
+        public void Create_account_for_user_expense_more_than_1000()
+        {
+            // Act
+            var emailAddress = "User2@gmail.com";
+            var user = _userService.GetByEmailAddress("User2@gmail.com").Result;
+            var accountCreateResponse = _controller.Accounts(emailAddress);
 
-        //    // Assert
-        //    Assert.IsType<BadRequestResult>(user);
-        //}
+            // Assert
+            var result = accountCreateResponse.Result.GetActionObjectResult() as AccountsResponseDto;
 
-        //[Fact]
-        //public void Get_all_the_accounts()
-        //{
-        //    // Act
-        //    var accounts = _controller.Accounts();
+            // Assert
+            _logger.Verify(l => l.Information(It.Is<string>(s =>
+                            s == $"Account create successfully for emailAddress : {emailAddress}")),
+                           Times.AtLeastOnce);
+            Assert.Multiple(() =>
+            {
+                Assert.IsNotNull(result.AccountId);
+                Assert.AreEqual(user.UserId, result.UserId);
+            });
+        }
 
-        //    // Assert
-        //    var items = Assert.IsType<IEnumerable<UsersResponseDto>>(accounts);
-        //    Assert.Equal(3, items.Count());
-        //}
+        [Test]
+        public async Task Get_all_the_accounts()
+        {
+            // Act
+            var okResult = await _controller.Accounts();
+            // Assert
+            var result = okResult.GetObjectResult();
+            Assert.AreEqual(3, result.Count());
+        }
     }
 }
