@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using User.API.Models;
 using User.API.Services.User;
 
-namespace User.UnitTest
+namespace User.UnitTest.Service
 {
     public class UserServiceFake : IUsersService
     {
@@ -13,8 +13,14 @@ namespace User.UnitTest
         public UserServiceFake()
         {
             _userData = new List<UsersResponseDto>();
-            _userData.Add(new UsersResponseDto() { UserId = new Guid("ab2bd817-98cd-4cf3-a80a-53ea0cd9c200"),
-                Name = "User1", EmailAddress = "User1@gmail.com", MonthlySalary = 10000, MonthlyExpenses = 500 });
+            _userData.Add(new UsersResponseDto()
+            {
+                UserId = new Guid("ab2bd817-98cd-4cf3-a80a-53ea0cd9c200"),
+                Name = "User1",
+                EmailAddress = "User1@gmail.com",
+                MonthlySalary = 10000,
+                MonthlyExpenses = 500
+            });
             _userData.Add(
              new UsersResponseDto()
              {
@@ -31,8 +37,8 @@ namespace User.UnitTest
                 EmailAddress = "User3@gmail.com",
                 MonthlySalary = 20000,
                 MonthlyExpenses = 2000
-            }); 
-          
+            });
+
         }
 
         public async Task<IEnumerable<UsersResponseDto>> GetUsers()

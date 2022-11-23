@@ -1,18 +1,17 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Serilog;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using User.API.Controllers;
 using User.API.Models;
 using User.API.Services.Account;
 using User.API.Services.User;
+using User.UnitTest.Service;
 using Xunit;
 
-namespace User.UnitTest
+namespace User.UnitTest.Controller
 {
     internal class AccountsControllerTest
     {

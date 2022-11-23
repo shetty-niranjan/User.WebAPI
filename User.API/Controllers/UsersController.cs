@@ -30,7 +30,6 @@ namespace TestProject.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<UsersResponseDto>> Users([FromBody] UsersRequestDto model)
         {
-            _logger.Information("User creation started for email address...");
             var emailExist = await _userService.CheckEmailAddress(model.EmailAddress);
             IValidate<bool, string> validateEmail = new ValidateUserEmailAddress();
             var error = validateEmail.Validate(emailExist);
@@ -39,13 +38,14 @@ namespace TestProject.WebAPI.Controllers
                 return BadRequest(error);
             }
             var user = await _userService.CreateUser(model);
+            _logger.Information("User created successfully...");
             return Ok(user);
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UsersResponseDto>>> Users()
         {
-            var users = await _userService.GetUsers();           
+            var users = await _userService.GetUsers();
             return Ok(users);
         }
 
@@ -53,7 +53,11 @@ namespace TestProject.WebAPI.Controllers
         public async Task<IActionResult> Users(Guid id)
         {
             var user = await _userService.GetUserById(id);
-            if (user == null) NotFound("User not found");
+            if (user == null)
+            {
+                _logger.Information("User is not found in the database...");
+                NotFound("User not found");
+            }
             return Ok(user);
         }
     }

@@ -8,9 +8,10 @@ using System.Linq;
 using TestProject.WebAPI.Controllers;
 using User.API.Models;
 using User.API.Services.User;
+using User.UnitTest.Service;
 using Xunit;
 
-namespace User.UnitTest
+namespace User.UnitTest.Controller
 {
     public class UserControllerTest
     {
@@ -59,7 +60,7 @@ namespace User.UnitTest
             Assert.IsType<NotFoundResult>(notFoundResult);
         }
 
-       
+
         [Fact]
         public void Add_Valid_User_Passed_Returns_Created_Response()
         {
@@ -67,7 +68,7 @@ namespace User.UnitTest
             UsersRequestDto request = new()
             {
                 Name = "test5",
-                EmailAddress="test5@gmail.com",
+                EmailAddress = "test5@gmail.com",
                 MonthlyExpenses = 100,
                 MonthlySalary = 1000
             };
@@ -96,6 +97,6 @@ namespace User.UnitTest
 
             // Assert
             Assert.IsType<BadRequestObjectResult>(badResponse);
-        }        
+        }
     }
 }

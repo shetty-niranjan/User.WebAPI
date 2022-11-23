@@ -8,7 +8,7 @@ using User.API.Models;
 using User.API.Services.Account;
 using User.API.Services.User;
 
-namespace User.UnitTest
+namespace User.UnitTest.Service
 {
     internal class AccountsServiceFake : IAccountService
     {
@@ -48,7 +48,7 @@ namespace User.UnitTest
             _accountsData.Add(new AccountsResponseDto()
             {
                 AccountId = new Guid("ba2bd817-98cd-4cf3-a80a-53ea0cd9c400"),
-                UserId =    new Guid("ab2bd817-98cd-4cf3-a80a-53ea0cd9c200")                
+                UserId = new Guid("ab2bd817-98cd-4cf3-a80a-53ea0cd9c200")
             });
             _accountsData.Add(
              new AccountsResponseDto()
@@ -77,7 +77,7 @@ namespace User.UnitTest
                 AccountId = accountId,
                 UserId = user.UserId
             });
-            return await Task.FromResult(_accountsData.SingleOrDefault(a => a.AccountId==accountId));
+            return await Task.FromResult(_accountsData.SingleOrDefault(a => a.AccountId == accountId));
         }
     }
 }
