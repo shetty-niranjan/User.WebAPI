@@ -1,10 +1,8 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using Catalog.API.Data.Interfaces;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using User.API.Data.Interfaces;
 using User.API.Entities;
-using User.API.SeedData;
 
-namespace Catalog.API.Data
+namespace User.API.Data
 {
     public class ApplicationDataContext : DbContext, IApplicationDataContext
     {

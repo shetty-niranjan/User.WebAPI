@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Catalog.API.Data;
-using Catalog.API.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using User.API.Data;
+using User.API.Data.Interfaces;
 using User.API.Entities;
 using User.API.Repositories.Users.Interfaces;
 

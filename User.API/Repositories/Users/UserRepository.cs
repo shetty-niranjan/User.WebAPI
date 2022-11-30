@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Catalog.API.Data;
-using Catalog.API.Data.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
+using User.API.Data;
+using User.API.Data.Interfaces;
 using User.API.Repositories.Users.Interfaces;
 
 namespace User.API.Repositories.Users

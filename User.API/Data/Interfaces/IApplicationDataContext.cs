@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using User.API.Entities;
 
-namespace Catalog.API.Data.Interfaces
+namespace User.API.Data.Interfaces
 {
     public interface IApplicationDataContext
     {

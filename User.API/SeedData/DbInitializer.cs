@@ -1,7 +1,5 @@
-﻿using Catalog.API.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
 using User.API.Entities;
 
 namespace User.API.SeedData

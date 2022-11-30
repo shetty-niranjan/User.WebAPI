@@ -1,5 +1,3 @@
-using Catalog.API.Data;
-using Catalog.API.Data.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +11,8 @@ using Polly.Extensions.Http;
 using Serilog;
 using System;
 using System.Net.Http;
+using User.API.Data;
+using User.API.Data.Interfaces;
 using User.API.Helpers;
 using User.API.Repositories.Users;
 using User.API.Repositories.Users.Interfaces;
